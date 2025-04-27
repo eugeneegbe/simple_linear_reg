@@ -3,21 +3,32 @@ import numpy as np
 
 class MyLinearRegression:
     
-    def __init__(self, learning_rate=0.01, iters=6):
+    def __init__(self, learning_rate, iters=10):
         self.learning_rate = learning_rate
         self.iters = iters
         self.weights = None
         self.bias = None
 
     def fit(self, X, y):
+
+        # get the number of features from the training set 
+        # initialize our wights and bias
         n_samples, n_features = X.shape
-        self.weights = np.zeros(n_features)  # Initialize weights
+        self.weights = np.zeros(n_features)
+        self.bias = 0
 
-        for iteration in range(self.iters):
-            y_pred = np.dot(X, self.weights)  # Predictions
-            dw = (1/n_samples) * X.T.dot(y_pred - y)  # Gradient
-            self.weights -= self.learning_rate * dw  # Update weights
+        for i in range(self.iters):
+            # predicting for all samples at once as a matrice
+            # np.dot gives us a summation already
+            y_pred = np.dot(X, self.weights) + self.bias
 
+            # we compute the change in the bias and
+            db = (1/n_samples) * np.sum(y_pred - y)
+            dw = (1/n_samples) * np.dot(X.T, (y_pred - y))
+            self.weights -= self.learning_rate * dw
+
+            # update the weight and bias
+            self.bias = self.bias = (self.learning_rate * db)
 
     def predict(self, x_test):
         """
@@ -25,7 +36,7 @@ class MyLinearRegression:
         inputs: x_test - A set of features from a dataset test split
         returns: y_new_pred - A model prediction 
         """
-        y_new_pred = x_test.dot(self.weights)
+        y_new_pred = np.dot(x_test, self.weights) + self.bias
 
         return y_new_pred
 
