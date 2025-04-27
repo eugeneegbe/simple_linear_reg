@@ -9,7 +9,6 @@ from utils import Data
 project_data = Data(fetch_california_housing())
 df = project_data.get_dataframe()
 
-df = df.drop(columns=["Latitude","Longitude"], axis=1)
 
 # We remove the target from the x_train 
 X_train, X_test, y_train, y_test = project_data.split_data(df.drop(columns=["target"], axis=1),
@@ -17,7 +16,7 @@ X_train, X_test, y_train, y_test = project_data.split_data(df.drop(columns=["tar
 
 # Apply our custom model to the train set and report the error
 
-lr_model = MyLinearRegression(learning_rate=0.0001)
+lr_model = MyLinearRegression()
 weight_bias = lr_model.fit(X_train, y_train)
 
 # predict on the training set

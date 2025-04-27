@@ -3,42 +3,40 @@ import numpy as np
 
 class MyLinearRegression:
     
-    def __init__(self, learning_rate, iters=10):
-        self.learning_rate = learning_rate
+    def __init__(self, iters=1000):
         self.iters = iters
-        self.weights = None
-        self.bias = None
+        self.intercept = None
+        self.last_beta = None
+
 
     def fit(self, X, y):
 
-        # get the number of features from the training set 
-        # initialize our wights and bias
-        n_samples, n_features = X.shape
-        self.weights = np.zeros(n_features)
-        self.bias = 0
+        # We are using the closed-form method to obtain the
+        # which permits us to get beta immediately
+        # get different values of betas after many iterations
 
+        betas = []
         for i in range(self.iters):
-            # predicting for all samples at once as a matrice
-            # np.dot gives us a summation already
-            y_pred = np.dot(X, self.weights) + self.bias
+            XTX = np.dot(X.T, X)
+            xTy = np.dot(X.T, y)
 
-            # we compute the change in the bias and
-            db = (1/n_samples) * np.sum(y_pred - y)
-            dw = (1/n_samples) * np.dot(X.T, (y_pred - y))
-            self.weights -= self.learning_rate * dw
+            beta_hat = np.dot(np.linalg.inv(XTX), xTy)
 
-            # update the weight and bias
-            self.bias = self.bias = (self.learning_rate * db)
+            betas.append(beta_hat)
 
-    def predict(self, x_test):
+        self.last_beta = betas[-1]
+
+
+    def predict(self, X_test):
         """
         Makes a prediction y given a group of features x
         inputs: x_test - A set of features from a dataset test split
         returns: y_new_pred - A model prediction 
         """
-        y_new_pred = np.dot(x_test, self.weights) + self.bias
 
+        y_new_pred = np.dot(X_test, self.last_beta)
         return y_new_pred
+
 
     def get_mse(self, y_test, predictions):
         return np.mean((y_test - predictions)**2)
