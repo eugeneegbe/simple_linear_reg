@@ -2,9 +2,22 @@
 
 
 ## Requitement
+To run the comparison, run the following commands
+* Create a new conda environment using the requirement file dependencies file 
 
+```
+conda create --name myenv --file requirements.txt
+```
+* activate the conda environment 
+```
+conda activate myenv
+```
+* From the root directory, run the following
+```
+python run.py
+```
 
-## Running the application
+## Running the comparison
 
 
 ## Evluation
@@ -17,3 +30,5 @@ The mse for both models are show below
 | Sklearn | 0.23575564509792812    | 0.19591829337932573    |
 
 Note: These values are prior to changing slightly during next run.
+
+# Discussion
