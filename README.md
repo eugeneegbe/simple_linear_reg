@@ -1,5 +1,5 @@
 # Custom Linear regression
-In this repository, we compare a custom linear model from scratch with, the standard Sklearn's LinearRegression.
+In this repository, we compare a custom linear regression model built from scratch with, the standard Sklearn's LinearRegression.
 
 Two methods are implemented but with a single adoption of the one with the best MSE according to our data set and how we managed to get the better predictions. These are:
 
