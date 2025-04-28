@@ -8,7 +8,6 @@ Two methods are implemented but with a single adoption of the one with the best 
 
 Both methods are explained in detail [here](https://www.cs.toronto.edu/~rgrosse/courses/csc311_f20/readings/notes_on_linear_regression.pdf)
 
-
 ## Setup And Run
 To run the comparison, run the following commands
 * Create a new conda environment using the requirement file dependencies file 
@@ -24,6 +23,8 @@ conda activate myenv
 ```bash
 python run.py
 ```
+### Running Gradient Descent Method
+Note: Since GD is still under experimentation, it has its own branch `exp-gradient-descent`. Be sure to be on that branch to be able to test.
 
 ## Evluation
 The mse for both models are show below using gradient descent.
