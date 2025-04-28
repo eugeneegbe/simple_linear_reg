@@ -28,7 +28,8 @@ class Data:
         """
 
         # Note that we don't include the column y
-        X_train, X_test, y_train, y_test = train_test_split(dataframe, y_column, test_size=test_size)
+        X_train, X_test, y_train, y_test = train_test_split(dataframe, y_column, test_size=test_size,
+                                                            random_state=42, shuffle=True)
         return X_train, X_test, y_train, y_test
 
 

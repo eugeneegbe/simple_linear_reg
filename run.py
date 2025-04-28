@@ -9,11 +9,16 @@ from utils import Data
 project_data = Data(fetch_california_housing())
 df = project_data.get_dataframe()
 
+print('dataset information')
 
 # We remove the target from the x_train 
 X_train, X_test, y_train, y_test = project_data.split_data(df.drop(columns=["target"], axis=1),
                                                            df["target"], test_size=0.2)
 
+print('sdataset hape:', df.shape)
+print('train:', X_train.shape)
+print('test', X_test.shape)
+print('--------------------------')
 # Apply our custom model to the train set and report the error
 
 lr_model = MyLinearRegression()
@@ -31,6 +36,7 @@ lr_train_model_mse = lr_model.get_mse(y_train, train_predictions)
 
 lr_test_model_mse = lr_model.get_mse(y_test, test_predictions)
 
+print('Custom MSE: Train\t Test \n')
 print(lr_train_model_mse, lr_test_model_mse)
 print('----------------------------------')
 
@@ -43,7 +49,8 @@ sk_lr_model.fit(X_train, y_train)
 sk_train_pred = sk_lr_model.predict(X_train)
 sk_test_pred = sk_lr_model.predict(X_test)
 
-sk_train_mse  = np.mean((y_train - sk_train_pred)**2)
-sk_test_mse  = np.mean((y_test - sk_test_pred)**2)
+sk_train_mse  = (np.mean((y_train - sk_train_pred)**2))**1/2
+sk_test_mse  = (np.mean((y_test - sk_test_pred)**2))**1/2
 
+print('Sklearn MSE: Train\t Test')
 print(sk_train_mse, sk_test_mse)

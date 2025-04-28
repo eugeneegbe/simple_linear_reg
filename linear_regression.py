@@ -3,33 +3,33 @@ import numpy as np
 
 class MyLinearRegression:
     
-    def __init__(self, iters=1000):
+    def __init__(self, lr = 0.01, iters=1000):
         self.iters = iters
-        self.intercept = None
-        self.beta_hat = None
-
+        self.weight = 0
+        self.bias = 0
+        self.loss = 0
+        self.lr = lr
 
     def fit(self, X, y):
+        n = len(X)
 
-        # We are using the closed-form method to obtain the
-        # optimal beta_hat we will use for prediction
+        for i in range(self.iters):
+            y_pred = self.predict(X)
+            loss = self.get_mse(y, y_pred)
 
-        XTX = np.dot(X.T, X)
-        xTy = np.dot(X.T, y)
+            dw = (-2/n) * np.sum(X * (y - y_pred))
+            db = (-2/n) * np.sum(y - y_pred)
+            # We are using gradient descent method
+            self.weight = self.weight - (self.lr * dw)
+            self.bias = self.bias - (self.lr * db)
+            print(y_pred)
+            self.loss = loss
 
-        self.beta_hat = np.dot(np.linalg.inv(XTX), xTy)
 
-
-    def predict(self, X_test):
-        """
-        Makes a prediction y given a group of features x
-        inputs: x_test - A set of features from a dataset test split
-        returns: y_new_pred - A model prediction 
-        """
-
-        y_new_pred = np.dot(X_test, self.beta_hat)
+    def predict(self, X):
+        y_new_pred = (self.weight * X) + self.bias 
         return y_new_pred
 
 
-    def get_mse(self, y_test, predictions):
-        return np.mean((y_test - predictions)**2)
+    def get_mse(self, y, y_pred):
+        return np.mean((y - y_pred)**2)
